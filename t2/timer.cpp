@@ -2,7 +2,8 @@
 
 
 void sighandler(int a, siginfo_t* b, void* c){
-    if(a == SIGALRM) std::cout<< "Handler do timer." << std::endl;
+    //if(a == SIGALRM) std::cout<< "Handler do timer." << std::endl;
+    std::cout<< "Handler do timer." << std::endl;
 }
 
 Timer::Timer(const unsigned int period){
@@ -47,26 +48,19 @@ int Timer::timer_disable(){
     return timer_settime(timerid, 0, &disable, NULL);
 }
 
+Timer::~Timer(){
+    timer_delete(timerid);
+}
+
 /*
-    _period = period;
-    _handler = handler;
-
-    timer.it_interval.tv_sec = _period/1000000;
-    timer.it_interval.tv_usec = _period%1000000;
-    timer.it_value.tv_sec = 0;
-    timer.it_value.tv_usec = 0;
-
-    action.sa_handler = handler;
-    action.sa_flags = 0;
-    
-    sigemptyset(&action.sa_mask);
-    sigaction(SIGALRM, &action, NULL);
-
-    setitimer(CLOCK_, &timer, NULL); 
-
-    //sigwait();
-    // int sig;
-    //sigwait(&mask, &sig);  //pendente 
-    // sigaction( SIGALRM, &action, NULL );
-
-    */
+timer_gettime() returns the time until next expiration, and the
+       interval, for the timer specified by timerid, in the buffer
+       pointed to by curr_value.  The time remaining until the next
+       timer expiration is returned in curr_value->it_value; this is
+       always a relative value, regardless of whether the TIMER_ABSTIME
+       flag was used when arming the timer.  If the value returned in
+       curr_value->it_value is zero, then the timer is currently
+       disarmed.  The timer interval is returned in
+       curr_value->it_interval.  If the value returned in
+       curr_value->it_interval is zero, then this is a "one-shot" timer.
+*/

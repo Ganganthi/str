@@ -23,7 +23,7 @@ public:
 
     Timer(){}
 
-
+    ~Timer();
     
     int timer_enable();
 
@@ -39,6 +39,7 @@ private:
 
     struct sigaction action;
 
+    //
     // action.sa_flags = SA_SIGINFO;
     // action.sa_sigaction = handler;
     // sigemptyset(&action.sa_mask);
