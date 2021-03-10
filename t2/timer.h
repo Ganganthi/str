@@ -1,4 +1,3 @@
-
 #ifndef timer_h
 #define timer_h
 
@@ -7,10 +6,6 @@
 #include <sys/time.h>
 #include <iostream>
 #include <utility>
-
-
-// int timer_create(clockid_t clockid = CLOCK_REALTIME, struct sigevent *sevp,
-                        // timer_t *timerid);
 
 
 class Timer
@@ -26,19 +21,23 @@ public:
     ~Timer();
     
     int timer_enable();
-
     int timer_disable();
 
+    // lista de sinais
     sigset_t sig_ref;
+
+    timer_t timerid;   //(uintmax_t) timerid
+
+    struct itimerspec its;
 private:
 ////---------------------------------
-    // clockid_t clockid = CLOCK_REALTIME;
-    timer_t timerid;   //(uintmax_t) timerid
+
     struct sigevent siev;
-    struct itimerspec its;
+    
 
     struct sigaction action;
 
+    
     //
     // action.sa_flags = SA_SIGINFO;
     // action.sa_sigaction = handler;

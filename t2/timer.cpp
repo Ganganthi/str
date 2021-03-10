@@ -20,13 +20,13 @@ Timer::Timer(const unsigned int period){
     sigemptyset(&action.sa_mask);  //nao bloquear nenhum sinal
     sigaction(SIGALRM, &action, NULL);
 
-    its.it_value.tv_sec = 0;
-    its.it_value.tv_nsec = _period * 1000000;
-    its.it_interval.tv_sec = 0;
-    its.it_interval.tv_nsec = _period * 1000000;
+    // its.it_value.tv_sec = _period / 1000000000;
+    // its.it_value.tv_nsec = _period % 1000000000;
+    // its.it_interval.tv_sec = _period / 1000000000;
+    // its.it_interval.tv_nsec = _period % 1000000000;
 
     sigemptyset(&sig_ref);
-    sigaddset(&sig_ref, SIGALRM);   //bota o sigalarm na lista
+    sigaddset(&sig_ref, SIGALRM);   //bota o sigalarm na lista sig_ref
 
     timer_create(CLOCK_REALTIME, &siev, &timerid);
     //liga o timer
@@ -36,16 +36,19 @@ Timer::Timer(const unsigned int period){
 
 //liga o timer
 int Timer::timer_enable(){
+    its.it_value.tv_sec = _period / 1000000000;
+    its.it_value.tv_nsec = _period % 1000000000;
+    its.it_interval.tv_sec = _period / 1000000000;
+    its.it_interval.tv_nsec = _period % 1000000000;
     return timer_settime(timerid, 0, &its, NULL);
 }
     
 int Timer::timer_disable(){
-    struct itimerspec disable;
-    disable.it_value.tv_sec = 0;
-    disable.it_value.tv_nsec = 0;
-    disable.it_interval.tv_sec = 0;
-    disable.it_interval.tv_nsec = 0;
-    return timer_settime(timerid, 0, &disable, NULL);
+    its.it_value.tv_sec = 0;
+    its.it_value.tv_nsec = 0;
+    its.it_interval.tv_sec = 0;
+    its.it_interval.tv_nsec = 0;
+    return timer_settime(timerid, 0, &its, NULL);
 }
 
 Timer::~Timer(){
