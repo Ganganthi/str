@@ -37,15 +37,6 @@ private:
 
     struct sigaction action;
 
-    
-    //
-    // action.sa_flags = SA_SIGINFO;
-    // action.sa_sigaction = handler;
-    // sigemptyset(&action.sa_mask);
-
-  
-/////----------------------------------
-
     unsigned int _period;
 };
 

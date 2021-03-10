@@ -3,7 +3,8 @@
 
 void sighandler(int a, siginfo_t* b, void* c){
     //if(a == SIGALRM) std::cout<< "Handler do timer." << std::endl;
-    std::cout<< "Handler do timer." << std::endl;
+    std::cout<< "Perdeu deadline." << std::endl;
+
 }
 
 Timer::Timer(const unsigned int period){
@@ -19,11 +20,6 @@ Timer::Timer(const unsigned int period){
     action.sa_sigaction = sighandler;
     sigemptyset(&action.sa_mask);  //nao bloquear nenhum sinal
     sigaction(SIGALRM, &action, NULL);
-
-    // its.it_value.tv_sec = _period / 1000000000;
-    // its.it_value.tv_nsec = _period % 1000000000;
-    // its.it_interval.tv_sec = _period / 1000000000;
-    // its.it_interval.tv_nsec = _period % 1000000000;
 
     sigemptyset(&sig_ref);
     sigaddset(&sig_ref, SIGALRM);   //bota o sigalarm na lista sig_ref
