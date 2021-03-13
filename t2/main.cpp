@@ -14,7 +14,7 @@ int main(){
     }
     while (priori<1 || priori>99)
     {
-        std::cout<< "Prioridade (1 - mais prioritario - a 99 - menos prioritario -)" << std::endl;
+        std::cout<< "Prioridade (1 - menos prioritario - a 99 - mais prioritario -)" << std::endl;
         std::cin >> priori;
     }
     std::cout<< "Fator de carga da CPU" << std::endl;
@@ -30,9 +30,11 @@ int main(){
     if(policy == 1) policy = SCHED_FIFO;
     else policy = SCHED_RR;
 
-    
+    // Configura a politica de escalonamento
     struct sched_param sp = { .sched_priority = priori};
     sched_setscheduler(0, policy, &sp);
+
+    // Cria a tarefa periodica e a executa
     Thread_per *thr = new Thread_per(per*1000000, load);
     thr->run();
 

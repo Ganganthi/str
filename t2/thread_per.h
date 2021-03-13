@@ -6,17 +6,18 @@
 class Thread_per
 {
 public:
+
     Thread_per(unsigned int, unsigned int);
     Thread_per();
 
     void run();
-    Timer timer;
     
     void tempoderesposta();
     
+    Timer timer;
 private:
     int period;
-    int priority;
+
     int load;
     
     
