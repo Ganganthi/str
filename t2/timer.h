@@ -11,8 +11,7 @@
 class Timer
 {
 public:
-    // typedef void (Function)(int);
-
+    
     //period in us
     Timer(const unsigned int period);
 
@@ -23,26 +22,20 @@ public:
     int timer_enable();
     int timer_disable();
 
-    // lista de sinais
+    // Lista de sinais
     sigset_t sig_ref;
 
-    timer_t timerid;   //(uintmax_t) timerid
-
     struct itimerspec its;
-private:
-////---------------------------------
+    timer_t timerid;   
 
-    struct sigevent siev;
-    
+private:
+
+
+    struct sigevent siev;   
 
     struct sigaction action;
 
     unsigned int _period;
 };
-
-// void sighandler(int a, siginfo_t* b, void* c){
-//     if(a == SIGALRM) std::cout<< "Handler do timer." << std::endl;
-// }
-
 
 #endif
